@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"os"
+)
 
 type Valtype struct {
 	row int //行
@@ -49,10 +54,25 @@ func main() {
 	}
 
 	var chessMap2 [11][11]int
-	for i, valsac := range sparseArr {
-		if i != 0 {
+	ac, err := os.Open("F:/1233.txt")
+	if err != nil {
+		fmt.Println("文件错误", err)
+		return
+	}
 
-			chessMap2[valsac.row][valsac.col] = valsac.avl
+	reader := bufio.NewReader(ac)
+	//循环的读取文件的内容
+	for {
+		_, err := reader.ReadString('\n')
+		if err == io.EOF {
+			break
+		}
+
+		for i, valsac := range sparseArr {
+			if i != 0 {
+
+				chessMap2[valsac.row][valsac.col] = valsac.avl
+			}
 		}
 	}
 	fmt.Println("恢复之后的数据")
